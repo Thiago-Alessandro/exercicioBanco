@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Banco implements Imprimivel{
 
-    ArrayList<ContaBancaria> contas = new ArrayList<>();
+    private final ArrayList<ContaBancaria> contas = new ArrayList<>();
 
     public boolean inserirConta(ContaBancaria conta){
         for(ContaBancaria contaFor : contas){
@@ -10,21 +10,11 @@ public class Banco implements Imprimivel{
                 return false;
             }
         }
-        if(contas.add(conta)){
-            return true;
-        }
-        return false;
+        return contas.add(conta);
     }
 
     public boolean removerConta(ContaBancaria conta){
-        for (ContaBancaria contaFor : contas){
-            if(conta == contaFor){
-                if(contas.remove(conta)){
-                    return true;
-                }
-            }
-        }
-        return false;
+        return contas.remove(conta);
     }
 
     public ContaBancaria procurarConta(int numeroConta){
@@ -39,8 +29,9 @@ public class Banco implements Imprimivel{
     @Override
     public String mostrarDados() {
         String dados = "";
+        Relatorio relatorio = new Relatorio();
         for (ContaBancaria contaBancaria : contas){
-            dados += contaBancaria.mostrarDados();
+            dados += relatorio.gerarRelatorio(contaBancaria);
         }
         return dados;
     }

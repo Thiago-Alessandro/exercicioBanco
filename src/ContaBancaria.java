@@ -1,18 +1,17 @@
 public abstract class ContaBancaria implements Imprimivel{
 
-    private int numero;
+    private final int numero;
     private double saldo = 0;
+
+    public ContaBancaria(int numero){
+        this.numero = numero;
+    }
 
     public abstract boolean sacar(double valor);
     public abstract boolean depositar(double valor);
 
     public boolean trasferir(double valor, ContaBancaria conta){
-        if(this.sacar(valor)) {
-            if (conta.depositar(valor)) {
-                return true;
-            }
-        }
-        return false;
+        return valor > 0 && conta != this && this.sacar(valor) && conta.depositar(valor);
     }
 
     public double getSaldo() {
@@ -21,10 +20,6 @@ public abstract class ContaBancaria implements Imprimivel{
 
     public int getNumero() {
         return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
     }
 
     public void setSaldo(double saldo) {
